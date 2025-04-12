@@ -1,0 +1,57 @@
+client:
+  num_clients: 10
+  batch_size: 32
+  local_epochs: 3
+  learning_rate: 0.01
+  samples_per_client: 10000
+  train_size: 5000
+  val_size: 3000
+  test_size: 2000
+  noise:
+    type: "gaussian"
+    sigma: 0.05
+    epsilon: 1.0
+
+aggregator:
+  num_clusters:
+    options: [3, 5]
+    selected: 3
+  alpha_agg:
+    options: [0.1, 0.3, 0.5]
+    selected: 0.3
+  rounds: 10
+  noise_sigma: 0.05
+
+model:
+  input_shape: [28, 28, 1]
+
+dataset:
+  options:
+    mnist:
+      num_classes: 10
+    fashion_mnist:
+      num_classes: 10
+    femnist:
+      num_classes: 62
+  selected: "femnist"
+
+partitioning:
+  options: ["iid", "noniid"]
+  selected: "iid"
+
+dirichlet:
+  alpha: 0.5
+
+attack:
+  malicious_clients:
+    options: [1, 2]
+    selected: 2
+  poisoning_percentage:
+    options: [0.1, 0.2]
+    selected: 0.2
+  backdoor_trigger:
+    size: 5
+    position: "bottom_right"
+    value: 1.0
+  noise_budget: 0.2
+  random_seed: 42
